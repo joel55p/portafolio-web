@@ -408,6 +408,52 @@ export default function App() {
           </div>
         </Section>
 
+
+
+
+
+
+
+
+        {/* contacto: links a email, github y linkedin */}
+        <Section id="contacto" style={{
+          padding: 'clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem)',
+          borderTop: '1px solid var(--border)',
+          background: 'var(--bg-2)',
+        }}>
+          <div style={{ maxWidth: '700px', margin: '0 auto', textAlign: 'center' }}>
+            <Label text="4. Contacto" style={{ justifyContent: 'center' }} />
+            <h2 style={{
+              fontFamily: 'var(--font-display)', fontWeight: 800,
+              fontSize: 'clamp(2rem, 5vw, 3.5rem)',
+              letterSpacing: '-0.03em', lineHeight: 1.1,
+              marginTop: '1.5rem', marginBottom: '1rem',
+            }}>
+              Hagamos algo<br /><span style={{ color: 'var(--accent)' }}>juntos.</span>
+            </h2>
+            <p style={{ color: 'var(--text-2)', marginBottom: '2.5rem' }}>
+              Disponible para proyectos freelance, posiciones full-time, o simplemente para hablar de tech.
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <ContactLink href="mailto:joelnerio72@gmail.com" label="@ email" />
+              <ContactLink href="https://github.com/joel55p" label=" </> github" />
+              <ContactLink href="https://www.linkedin.com/in/joel-nerio-071037393/" label="🔍︎ linkedin" />
+            </div>
+          </div>
+        </Section>
+
+        {/* footer con stack y nombre */}
+        <footer style={{
+          borderTop: '1px solid var(--border)',
+          padding: '1.5rem clamp(1.5rem, 5vw, 4rem)',
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          flexWrap: 'wrap', gap: '0.5rem',
+          color: 'var(--text-3)', fontSize: '11px', letterSpacing: '0.05em',
+        }}>
+          <span>// built con React y Vite, deployed en Vercel</span>
+          <span>{new Date().getFullYear()} — Joel Nerio</span>
+        </footer>
+
       </main>
 
       <style>{`
