@@ -36,6 +36,17 @@ function Section({ id, children, style }) {
   )
 }
 
+
+const STACK = [
+  { cat: 'Backend', items: ['Go', 'Node.js', 'Express', 'REST APIs', 'JWT Auth'] },
+  { cat: 'Frontend', items: ['React', 'Vite', 'HTML/CSS', 'JavaScript'] },
+  { cat: 'Deploy & Cloud', items: ['Vercel', 'Railway', 'GitHub Pages'] },
+  { cat: 'Testing & Tools', items: ['Vitest', 'React Testing Library', 'Git', 'GitHub', 'Postman'] },
+]
+
+
+
+
 //-------
 
 export default function App() {
@@ -228,6 +239,87 @@ export default function App() {
             <span>scroll</span><span>↓</span>
           </div>
         </section>
+
+        {/* sobre mi: texto biograafico y tabla de datos con bandera */}
+        <Section id="sobre mi" style={{
+          padding: 'clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem)',
+          borderTop: '1px solid var(--border)',
+        }}>
+          <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+            <Label text="1. Sobre mi" />
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '3rem', marginTop: '2.5rem' }}>
+              <div>
+                <h2 style={{
+                  fontFamily: 'var(--font-display)', fontWeight: 700,
+                  fontSize: 'clamp(1.6rem, 4vw, 2.2rem)',
+                  lineHeight: 1.2, letterSpacing: '-0.02em', marginBottom: '1.25rem',
+                }}>
+                  En busca de backends<br />
+                  <span style={{ color: 'var(--accent)' }}>que escalan.</span>
+                </h2>
+                <p style={{ color: 'var(--text-2)', lineHeight: 1.8, marginBottom: '1rem' }}>
+                  Actualmente soy un estudiante de Ciencias de la Computacion y que le interesa en algun punto ser un desarrollador web con enfoque en backend y arquitectura de servidores. A lo largo del curso Sistemas y Tecnologia Web tuve la oportunidad de profundizar en Go, despliegue en Railway y construccion de APIs.
+                </p>
+                <p style={{ color: 'var(--text-2)', lineHeight: 1.8 }}>
+                  Mi meta es trabajar en una startup tecnica que ayude a negocios pequenos y medianos a automatizar procesos mediante software bien construido.
+                </p>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {[
+                  { label: 'enfoque', value: 'Backend & Servers' },
+                  { label: 'audiencia', value: 'Startups tecnicas B2B' },
+                  { label: 'disponibilidad', value: 'Abierto a oportunidades' },
+                  {
+                    label: 'ubicacion',
+                    value: (
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <img src="/Guatemala.png" alt="Guatemala" style={{ width: '22px', height: '15px', objectFit: 'cover', borderRadius: '2px' }} />
+                        Guatemala, Ciudad de Guatemala
+                      </span>
+                    )
+                  },
+                ].map(({ label, value }) => (
+                  <div key={label} style={{
+                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                    borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem',
+                  }}>
+                    <span style={{ color: 'var(--text-3)', fontSize: '11px', letterSpacing: '0.1em' }}>{label}</span>
+                    <span style={{ color: 'var(--text)', fontSize: '13px' }}>{value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Section>
+
+        {/* stack: cuadricula de categorias y herramientas */}
+        <Section id="stack" style={{
+          padding: 'clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem)',
+          borderTop: '1px solid var(--border)',
+          background: 'var(--bg-2)',
+        }}>
+          <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+            <Label text="2. Stack" />
+            <p style={{ color: 'var(--text-2)', marginTop: '0.75rem', marginBottom: '2.5rem' }}>
+              Las herramientas que uso y por que las elegi.
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1px', border: '1px solid var(--border)' }}>
+              {STACK.map(({ cat, items }) => (
+                <div key={cat} style={{ padding: '1.5rem', background: 'var(--bg)', borderRight: '1px solid var(--border)' }}>
+                  <p style={{ color: 'var(--accent)', fontSize: '11px', letterSpacing: '0.1em', marginBottom: '1rem' }}>{cat}</p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    {items.map(item => (
+                      <span key={item} style={{ color: 'var(--text)', fontSize: '13px' }}>→ {item}</span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p style={{ color: 'var(--text-3)', fontSize: '12px', marginTop: '1.5rem', lineHeight: 1.7 }}>
+              <span style={{ color: 'var(--accent)' }}>nota:</span> Importante mencionar que Vercel y Railway ofrecen el 80% del valor con mucho menos friccion operacional que AWS/Azure/GCP para startups pequenas.
+            </p>
+          </div>
+        </Section>
 
       </main>
 
