@@ -56,7 +56,7 @@ function ProjectCard({ project }) {
             {project.name}
           </h3>
         </div>
-        {/* el badge live solo aparece si status es live */}
+        {/* badge live solo aparece si status es live */}
         {project.status === 'live' && (
           <span style={{
             fontSize: '10px', letterSpacing: '0.1em', padding: '3px 8px',
@@ -94,7 +94,7 @@ function ProjectCard({ project }) {
   )
 }
 
-
+// -------
 
 const STACK = [
   { cat: 'Backend', items: ['Go', 'Node.js', 'Express', 'REST APIs', 'JWT Auth'] },
@@ -102,7 +102,6 @@ const STACK = [
   { cat: 'Deploy & Cloud', items: ['Vercel', 'Railway', 'GitHub Pages'] },
   { cat: 'Testing & Tools', items: ['Vitest', 'React Testing Library', 'Git', 'GitHub', 'Postman'] },
 ]
-
 
 const PROJECTS = [
   {
@@ -134,7 +133,16 @@ const PROJECTS = [
   },
 ]
 
-//-------
+// ids usados en el nav — "sobre mi" tiene espacio, se mapea a id con guion bajo en el DOM
+const NAV_ID_MAP = {
+  'inicio': 'inicio',
+  'sobre mi': 'sobre-mi',
+  'stack': 'stack',
+  'proyectos': 'proyectos',
+  'contacto': 'contacto',
+}
+
+// -------
 
 export default function App() {
   const [active, setActive] = useState('inicio')
@@ -153,24 +161,27 @@ export default function App() {
     return () => clearInterval(id)
   }, [])
 
-  /* actualiza la seccion activa segun el scroll */
+  /* actualiza la seccion activa segun el scroll usando los ids reales del dom */
   useEffect(() => {
     const handler = () => {
-      const sections = NAV_ITEMS.map(id => document.getElementById(id))
       const scrollY = window.scrollY + 120
-      for (let i = sections.length - 1; i >= 0; i--) {
-        if (sections[i] && sections[i].offsetTop <= scrollY) {
-          setActive(NAV_ITEMS[i])
-          break
+      let currentActive = 'inicio'
+      for (const navLabel of NAV_ITEMS) {
+        const domId = NAV_ID_MAP[navLabel]
+        const el = document.getElementById(domId)
+        if (el && el.offsetTop <= scrollY) {
+          currentActive = navLabel
         }
       }
+      setActive(currentActive)
     }
     window.addEventListener('scroll', handler)
     return () => window.removeEventListener('scroll', handler)
   }, [])
 
-  const scrollTo = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  const scrollTo = (navLabel) => {
+    const domId = NAV_ID_MAP[navLabel]
+    document.getElementById(domId)?.scrollIntoView({ behavior: 'smooth' })
     setMenuOpen(false)
   }
 
@@ -190,14 +201,14 @@ export default function App() {
           <span style={{ color: 'var(--accent)' }}>{'>'}</span> portfolio
         </span>
         <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }} className="desktop-nav">
-          {NAV_ITEMS.map(id => (
-            <button key={id} onClick={() => scrollTo(id)} style={{
+          {NAV_ITEMS.map(label => (
+            <button key={label} onClick={() => scrollTo(label)} style={{
               background: 'none', border: 'none', cursor: 'pointer',
               fontFamily: 'var(--font-mono)', fontSize: '12px',
-              color: active === id ? 'var(--accent)' : 'var(--text-2)',
+              color: active === label ? 'var(--accent)' : 'var(--text-2)',
               transition: 'color 0.2s', letterSpacing: '0.05em',
             }}>
-              {active === id ? `[${id}]` : id}
+              {active === label ? `[${label}]` : label}
             </button>
           ))}
         </div>
@@ -214,14 +225,14 @@ export default function App() {
           background: 'var(--bg-2)', borderBottom: '1px solid var(--border)',
           padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem',
         }}>
-          {NAV_ITEMS.map(id => (
-            <button key={id} onClick={() => scrollTo(id)} style={{
+          {NAV_ITEMS.map(label => (
+            <button key={label} onClick={() => scrollTo(label)} style={{
               background: 'none', border: 'none', cursor: 'pointer',
               fontFamily: 'var(--font-mono)', fontSize: '13px',
-              color: active === id ? 'var(--accent)' : 'var(--text)',
+              color: active === label ? 'var(--accent)' : 'var(--text)',
               textAlign: 'left', padding: '0.25rem 0',
             }}>
-              {active === id ? `> ${id}` : `  ${id}`}
+              {active === label ? `> ${label}` : `  ${label}`}
             </button>
           ))}
         </div>
@@ -327,8 +338,8 @@ export default function App() {
           </div>
         </section>
 
-        {/* sobre mi: texto biograafico y tabla de datos con bandera */}
-        <Section id="sobre mi" style={{
+        {/* sobre mi: texto biografico y tabla de datos con bandera */}
+        <Section id="sobre-mi" style={{
           padding: 'clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem)',
           borderTop: '1px solid var(--border)',
         }}>
@@ -408,12 +419,23 @@ export default function App() {
           </div>
         </Section>
 
-
-
-
-
-
-
+        {/* proyectos: cards con badge live opcional */}
+        <Section id="proyectos" style={{
+          padding: 'clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem)',
+          borderTop: '1px solid var(--border)',
+        }}>
+          <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+            <Label text="3. Proyectos" />
+            <p style={{ color: 'var(--text-2)', marginTop: '0.75rem', marginBottom: '2.5rem' }}>
+              Trabajo real.
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', border: '1px solid var(--border)' }}>
+              {PROJECTS.map((p) => (
+                <ProjectCard key={p.slug} project={p} />
+              ))}
+            </div>
+          </div>
+        </Section>
 
         {/* contacto: links a email, github y linkedin */}
         <Section id="contacto" style={{
@@ -437,12 +459,12 @@ export default function App() {
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <ContactLink href="mailto:joelnerio72@gmail.com" label="@ email" />
               <ContactLink href="https://github.com/joel55p" label=" </> github" />
-              <ContactLink href="https://www.linkedin.com/in/joel-nerio-071037393/" label="🔍︎ linkedin" />
+              <ContactLink href="https://www.linkedin.com/in/joel-nerio-071037393/" label="linkedin" />
             </div>
           </div>
         </Section>
 
-        {/* footer con stack y nombre */}
+        {/* footer con stack usado y nombre */}
         <footer style={{
           borderTop: '1px solid var(--border)',
           padding: '1.5rem clamp(1.5rem, 5vw, 4rem)',
@@ -468,8 +490,6 @@ export default function App() {
           #inicio { grid-template-columns: 1fr !important; }
           #inicio > div:nth-child(3) { display: none !important; }
         }
-
-        
       `}</style>
     </div>
   )
