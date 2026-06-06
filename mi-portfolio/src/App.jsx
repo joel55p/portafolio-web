@@ -36,6 +36,65 @@ function Section({ id, children, style }) {
   )
 }
 
+function ProjectCard({ project }) {
+  const [hovered, setHovered] = useState(false)
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        padding: '1.75rem 2rem',
+        background: hovered ? 'var(--accent-dim)' : 'var(--bg)',
+        borderBottom: '1px solid var(--border)',
+        transition: 'background 0.2s', cursor: 'default',
+      }}
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.75rem' }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '1rem' }}>
+          <span style={{ color: 'var(--text-3)', fontSize: '11px' }}>{project.slug}</span>
+          <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.1rem', letterSpacing: '-0.01em' }}>
+            {project.name}
+          </h3>
+        </div>
+        {/* el badge live solo aparece si status es live */}
+        {project.status === 'live' && (
+          <span style={{
+            fontSize: '10px', letterSpacing: '0.1em', padding: '3px 8px',
+            border: '1px solid #ff4444', color: 'var(--text-3)',
+            display: 'flex', alignItems: 'center', gap: '5px',
+          }}>
+            <span style={{
+              display: 'inline-block', width: '6px', height: '6px',
+              borderRadius: '50%', background: '#ff4444',
+              animation: 'pulse 1.8s ease-out infinite',
+            }} />
+            live
+          </span>
+        )}
+      </div>
+      <p style={{ color: 'var(--text-2)', fontSize: '13px', lineHeight: 1.7, marginBottom: '1rem', maxWidth: '600px' }}>
+        {project.desc}
+      </p>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+          {project.tags.map(t => (
+            <span key={t} style={{
+              fontSize: '11px', padding: '2px 8px',
+              background: 'var(--bg-3)', color: 'var(--text-2)',
+              border: '1px solid var(--border)',
+            }}>{t}</span>
+          ))}
+        </div>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <a href={project.repo} style={{ fontSize: '12px', color: 'var(--text-3)' }} target="_blank" rel="noreferrer">repo ↗</a>
+          {project.demo && <a href={project.demo} style={{ fontSize: '12px', color: 'var(--accent)' }} target="_blank" rel="noreferrer">demo ↗</a>}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+
 
 const STACK = [
   { cat: 'Backend', items: ['Go', 'Node.js', 'Express', 'REST APIs', 'JWT Auth'] },
@@ -45,7 +104,35 @@ const STACK = [
 ]
 
 
-
+const PROJECTS = [
+  {
+    slug: '01',
+    name: 'Chat en Tiempo Real — JS Vanilla + Go',
+    desc: 'Chat funcional construido con JavaScript vanilla puro conectado a un servidor Go. Sin librerias externas: solo fetch(), DOM nativo y polling. Incluye preview de imagenes detectadas en mensajes, limite de 140 caracteres, auto-refresh cada segundo y scroll preservado al recibir nuevos mensajes.',
+    tags: ['JavaScript', 'Go', 'DOM', 'HTML/CSS', 'fetch()'],
+    status: null,
+    repo: 'https://github.com/joel55p/Lab6-web',
+    demo: null,
+  },
+  {
+    slug: '02',
+    name: 'Series Tracker — API REST Full Stack Go + SQLite + Vanilla JS',
+    desc: 'Aplicacion full stack con separacion real de responsabilidades: backend en Go puro (sin frameworks) exponiendo una API REST con SQLite, y cliente en HTML + CSS + JavaScript vanilla consumiendola con fetch(). CRUD completo de series, busqueda, ordenamiento, paginacion, soporte de imagenes y CORS configurado manualmente. Dos repositorios independientes.',
+    tags: ['Go', 'SQLite', 'REST API', 'JavaScript', 'Vercel', 'Railway'],
+    status: 'live',
+    repo: 'https://github.com/joel55p/web-frontend',
+    demo: 'https://web-frontend-chi-five.vercel.app',
+  },
+  {
+    slug: '03',
+    name: 'Calculadora React — Componentes, Testing + Storybook',
+    desc: 'Calculadora construida en React con arquitectura de componentes, testing con Vitest y React Testing Library, linting configurado y documentacion visual con Storybook. Maneja casos de borde: limite de 9 caracteres, overflow a error y resultados negativos.',
+    tags: ['React', 'Vitest', 'React Testing Library', 'Storybook'],
+    status: 'live',
+    repo: 'https://github.com/joel55p/project2-web',
+    demo: 'https://joelsiervas.online/24253/calculadora/',
+  },
+]
 
 //-------
 
@@ -326,6 +413,7 @@ export default function App() {
       <style>{`
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
         @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-6px)} }
+        @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(255,68,68,0.6)} 70%{box-shadow:0 0 0 6px rgba(255,68,68,0)} 100%{box-shadow:0 0 0 0 rgba(255,68,68,0)} }
         .desktop-nav { display:flex!important }
         .hamburger { display:none!important }
         @media(max-width:640px){
@@ -334,6 +422,8 @@ export default function App() {
           #inicio { grid-template-columns: 1fr !important; }
           #inicio > div:nth-child(3) { display: none !important; }
         }
+
+        
       `}</style>
     </div>
   )
