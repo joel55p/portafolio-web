@@ -133,7 +133,7 @@ const PROJECTS = [
   },
 ]
 
-// ids usados en el nav — "sobre mi" tiene espacio, se mapea a id con guion bajo en el DOM
+// ids del dom — "sobre mi" con espacio no es valido como id, se usa guion
 const NAV_ID_MAP = {
   'inicio': 'inicio',
   'sobre mi': 'sobre-mi',
@@ -161,10 +161,16 @@ export default function App() {
     return () => clearInterval(id)
   }, [])
 
-  /* actualiza la seccion activa segun el scroll usando los ids reales del dom */
+  /* detecta la seccion activa segun scroll
+     caso especial: si el usuario llega al fondo, activa contacto directamente */
   useEffect(() => {
     const handler = () => {
       const scrollY = window.scrollY + 120
+      const atBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 40
+      if (atBottom) {
+        setActive('contacto')
+        return
+      }
       let currentActive = 'inicio'
       for (const navLabel of NAV_ITEMS) {
         const domId = NAV_ID_MAP[navLabel]
