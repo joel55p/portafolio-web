@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 
 // -------
 
-const NAV_ITEMS = ['inicio', 'sobre mi', 'stack', 'proyectos', 'contacto']
+const NAV_ITEMS = ['inicio', 'sobre mi', 'stack', 'proyectos', 'notas', 'contacto']
 
 // -------
 
@@ -133,12 +133,31 @@ const PROJECTS = [
   },
 ]
 
-// ids del dom — "sobre mi" con espacio no es valido como id, se usa guion
+// notas tecnicas breves
+const NOTAS = [
+  {
+    slug: '01',
+    titulo: 'Por que HTTP sobre TCP sin net/http es mas dificil de lo que parece',
+    fecha: 'Jun 2025',
+    body: 'Cuando construi el Series Tracker usando el paquete net directamente, el primer error que me costo horas fue ERR_INVALID_HTTP_RESPONSE. El problema: estaba escribiendo los headers CORS antes de la linea de status HTTP. El protocolo HTTP exige que la primera linea sea siempre el status (HTTP/1.1 200 OK), y cualquier cosa antes de eso rompe la respuesta en el navegador. Usar net/http de la libreria estandar abstrae todo esto. Hacerlo a mano  obligo a entenderlo.',
+    tags: ['Go', 'HTTP', 'TCP', 'CORS'],
+  },
+  {
+    slug: '02',
+    titulo: 'Como estructurar middleware en Go sin frameworks',
+    fecha: 'Jun 2025',
+    body: 'En Go, un middleware es simplemente una funcion que recibe un http.Handler y devuelve otro http.Handler. El patron es siempre el mismo: hacer algo antes, llamar al siguiente handler, hacer algo despues. Lo interesante es que este patron es identico al de Express en Node, pero Go lo hace explicito en el sistema de tipos. Cuando agregue CORS al Series Tracker, lo implemente como un wrapper que añade los headers necesarios a cualquier handler que se le pase, sin tocar la lógica de negocio.',
+    tags: ['Go', 'Middleware', 'net/http'],
+  },
+]
+
+
 const NAV_ID_MAP = {
   'inicio': 'inicio',
   'sobre mi': 'sobre-mi',
   'stack': 'stack',
   'proyectos': 'proyectos',
+  'notas': 'notas',
   'contacto': 'contacto',
 }
 
@@ -162,7 +181,7 @@ export default function App() {
   }, [])
 
   /* detecta la seccion activa segun scroll
-     caso especial: si el usuario llega al fondo, activa contacto directamente */
+     caso especial en donde  si el usuario llega al fondo, activa contacto directamente */
   useEffect(() => {
     const handler = () => {
       const scrollY = window.scrollY + 120
@@ -443,14 +462,32 @@ export default function App() {
           </div>
         </Section>
 
-        {/* contacto: links a email, github y linkedin */}
-        <Section id="contacto" style={{
+        {/* notas tecnicas breves sobre lo aprendido */}
+        <Section id="notas" style={{
           padding: 'clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem)',
           borderTop: '1px solid var(--border)',
           background: 'var(--bg-2)',
         }}>
+          <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+            <Label text="4. Notas" />
+            <p style={{ color: 'var(--text-2)', marginTop: '0.75rem', marginBottom: '2.5rem' }}>
+              Cosas que aprendi construyendo. Sin filtro.
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', border: '1px solid var(--border)' }}>
+              {NOTAS.map((nota) => (
+                <NotaCard key={nota.slug} nota={nota} />
+              ))}
+            </div>
+          </div>
+        </Section>
+
+        {/* contacto: links a email, github y linkedin */}
+        <Section id="contacto" style={{
+          padding: 'clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem)',
+          borderTop: '1px solid var(--border)',
+        }}>
           <div style={{ maxWidth: '700px', margin: '0 auto', textAlign: 'center' }}>
-            <Label text="4. Contacto" style={{ justifyContent: 'center' }} />
+            <Label text="5. Contacto" style={{ justifyContent: 'center' }} />
             <h2 style={{
               fontFamily: 'var(--font-display)', fontWeight: 800,
               fontSize: 'clamp(2rem, 5vw, 3.5rem)',
@@ -510,6 +547,42 @@ function Label({ text, style }) {
       <span style={{ display: 'inline-block', width: '24px', height: '1px', background: 'var(--accent)' }} />
       {text}
     </p>
+  )
+}
+
+function NotaCard({ nota }) {
+  const [hovered, setHovered] = useState(false)
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        padding: '1.75rem 2rem',
+        background: hovered ? 'var(--accent-dim)' : 'var(--bg)',
+        borderBottom: '1px solid var(--border)',
+        transition: 'background 0.2s',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: '1rem', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
+        <span style={{ color: 'var(--text-3)', fontSize: '11px' }}>{nota.slug}</span>
+        <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1rem', letterSpacing: '-0.01em' }}>
+          {nota.titulo}
+        </h3>
+        <span style={{ color: 'var(--text-3)', fontSize: '11px', marginLeft: 'auto' }}>{nota.fecha}</span>
+      </div>
+      <p style={{ color: 'var(--text-2)', fontSize: '13px', lineHeight: 1.8, marginBottom: '1rem', maxWidth: '680px' }}>
+        {nota.body}
+      </p>
+      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+        {nota.tags.map(t => (
+          <span key={t} style={{
+            fontSize: '11px', padding: '2px 8px',
+            background: 'var(--bg-3)', color: 'var(--text-2)',
+            border: '1px solid var(--border)',
+          }}>{t}</span>
+        ))}
+      </div>
+    </div>
   )
 }
 
