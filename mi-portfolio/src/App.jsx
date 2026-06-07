@@ -56,7 +56,6 @@ function ProjectCard({ project }) {
             {project.name}
           </h3>
         </div>
-        {/* badge live solo aparece si status es live */}
         {project.status === 'live' && (
           <span style={{
             fontSize: '10px', letterSpacing: '0.1em', padding: '3px 8px',
@@ -107,7 +106,7 @@ const PROJECTS = [
   {
     slug: '01',
     name: 'Chat en Tiempo Real — JS Vanilla + Go',
-    desc: 'Chat funcional construido con JavaScript vanilla puro conectado a un servidor Go. Sin librerias externas: solo fetch(), DOM nativo y polling. Incluye preview de imagenes detectadas en mensajes, limite de 140 caracteres, auto-refresh cada segundo y scroll preservado al recibir nuevos mensajes.',
+    desc: 'Chat funcional construido con JavaScript vanilla puro conectado a un servidor Go. Sin librerías externas: solo fetch(), DOM nativo y polling. Incluye preview de imágenes detectadas en mensajes, límite de 140 caracteres, auto-refresh cada segundo y scroll preservado al recibir nuevos mensajes.',
     tags: ['JavaScript', 'Go', 'DOM', 'HTML/CSS', 'fetch()'],
     status: null,
     repo: 'https://github.com/joel55p/Lab6-web',
@@ -116,7 +115,7 @@ const PROJECTS = [
   {
     slug: '02',
     name: 'Series Tracker — API REST Full Stack Go + SQLite + Vanilla JS',
-    desc: 'Aplicacion full stack con separacion real de responsabilidades: backend en Go puro (sin frameworks) exponiendo una API REST con SQLite, y cliente en HTML + CSS + JavaScript vanilla consumiendola con fetch(). CRUD completo de series, busqueda, ordenamiento, paginacion, soporte de imagenes y CORS configurado manualmente. Dos repositorios independientes.',
+    desc: 'Aplicación full stack con separación real de responsabilidades: backend en Go puro (sin frameworks) exponiendo una API REST con SQLite, y cliente en HTML + CSS + JavaScript vanilla consumiéndola con fetch(). CRUD completo de series, búsqueda, ordenamiento, paginación, soporte de imágenes y CORS configurado manualmente. Dos repositorios independientes.',
     tags: ['Go', 'SQLite', 'REST API', 'JavaScript', 'Vercel', 'Railway'],
     status: 'live',
     repo: 'https://github.com/joel55p/web-frontend',
@@ -125,7 +124,7 @@ const PROJECTS = [
   {
     slug: '03',
     name: 'Calculadora React — Componentes, Testing + Storybook',
-    desc: 'Calculadora construida en React con arquitectura de componentes, testing con Vitest y React Testing Library, linting configurado y documentacion visual con Storybook. Maneja casos de borde: limite de 9 caracteres, overflow a error y resultados negativos.',
+    desc: 'Calculadora construida en React con arquitectura de componentes, testing con Vitest y React Testing Library, linting configurado y documentación visual con Storybook. Maneja casos de borde: límite de 9 caracteres, overflow a ERROR y resultados negativos.',
     tags: ['React', 'Vitest', 'React Testing Library', 'Storybook'],
     status: 'live',
     repo: 'https://github.com/joel55p/project2-web',
@@ -133,25 +132,25 @@ const PROJECTS = [
   },
 ]
 
-// notas tecnicas breves
+// notas técnicas breves
 const NOTAS = [
   {
     slug: '01',
-    titulo: 'Por que HTTP sobre TCP sin net/http es mas dificil de lo que parece',
+    titulo: 'Por qué HTTP sobre TCP sin net/http es más difícil de lo que parece',
     fecha: 'Jun 2025',
-    body: 'Cuando construi el Series Tracker usando el paquete net directamente, el primer error que me costo horas fue ERR_INVALID_HTTP_RESPONSE. El problema: estaba escribiendo los headers CORS antes de la linea de status HTTP. El protocolo HTTP exige que la primera linea sea siempre el status (HTTP/1.1 200 OK), y cualquier cosa antes de eso rompe la respuesta en el navegador. Usar net/http de la libreria estandar abstrae todo esto. Hacerlo a mano  obligo a entenderlo.',
+    body: 'Cuando construí el Series Tracker usando el paquete net directamente, el primer error que me costó horas fue ERR_INVALID_HTTP_RESPONSE. El problema: estaba escribiendo los headers CORS antes de la línea de status HTTP. El protocolo HTTP exige que la primera línea sea siempre el status (HTTP/1.1 200 OK), y cualquier cosa antes de eso rompe la respuesta en el navegador. Usar net/http de la librería estándar abstrae todo esto. Hacerlo a mano obligó a entenderlo.',
     tags: ['Go', 'HTTP', 'TCP', 'CORS'],
   },
   {
     slug: '02',
-    titulo: 'Como estructurar middleware en Go sin frameworks',
+    titulo: 'Cómo estructurar middleware en Go sin frameworks',
     fecha: 'Jun 2025',
-    body: 'En Go, un middleware es simplemente una funcion que recibe un http.Handler y devuelve otro http.Handler. El patron es siempre el mismo: hacer algo antes, llamar al siguiente handler, hacer algo despues. Lo interesante es que este patron es identico al de Express en Node, pero Go lo hace explicito en el sistema de tipos. Cuando agregue CORS al Series Tracker, lo implemente como un wrapper que añade los headers necesarios a cualquier handler que se le pase, sin tocar la lógica de negocio.',
+    body: 'En Go, un middleware es simplemente una función que recibe un http.Handler y devuelve otro http.Handler. El patrón es siempre el mismo: hacer algo antes, llamar al siguiente handler, hacer algo después. Lo interesante es que este patrón es idéntico al de Express en Node, pero Go lo hace explícito en el sistema de tipos. Cuando agregué CORS al Series Tracker, lo implementé como un wrapper que añade los headers necesarios a cualquier handler que se le pase, sin tocar la lógica de negocio.',
     tags: ['Go', 'Middleware', 'net/http'],
   },
 ]
 
-
+// ids del DOM — "sobre mi" con espacio no es válido como id, se usa guión
 const NAV_ID_MAP = {
   'inicio': 'inicio',
   'sobre mi': 'sobre-mi',
@@ -180,8 +179,8 @@ export default function App() {
     return () => clearInterval(id)
   }, [])
 
-  /* detecta la seccion activa segun scroll
-     caso especial en donde  si el usuario llega al fondo, activa contacto directamente */
+  /* detecta la sección activa según el scroll
+     caso especial: si el usuario llega al fondo, activa contacto directamente */
   useEffect(() => {
     const handler = () => {
       const scrollY = window.scrollY + 120
@@ -265,7 +264,7 @@ export default function App() {
 
       <main style={{ paddingTop: '56px' }}>
 
-        {/* hero: grid de dos columnas, texto izquierda y foto derecha */}
+        {/* hero: desktop = dos columnas, mobile = foto arriba pequeña + texto abajo */}
         <section id="inicio" style={{
           minHeight: 'calc(100vh - 56px)',
           display: 'grid',
@@ -275,7 +274,7 @@ export default function App() {
           position: 'relative', overflow: 'hidden',
           gap: '3rem',
         }}>
-          {/* fondo con grid de lineas */}
+          {/* fondo con grid de líneas */}
           <div style={{
             position: 'absolute', inset: 0, pointerEvents: 'none',
             backgroundImage: 'linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)',
@@ -289,7 +288,7 @@ export default function App() {
           }} />
 
           {/* columna izquierda: texto y botones */}
-          <div style={{ position: 'relative', zIndex: 1 }}>
+          <div style={{ position: 'relative', zIndex: 1 }} className="hero-text">
             <p style={{ color: 'var(--accent)', fontSize: '12px', letterSpacing: '0.15em', marginBottom: '1.5rem' }}>
               // Listo para empezar
             </p>
@@ -326,7 +325,7 @@ export default function App() {
           </div>
 
           {/* columna derecha: foto circular con borde degradado */}
-          <div style={{ position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div style={{ position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }} className="hero-photo">
             <div style={{ position: 'relative' }}>
               <div style={{
                 position: 'absolute', inset: '-3px',
@@ -363,13 +362,13 @@ export default function App() {
           </div>
         </section>
 
-        {/* sobre mi: texto biografico y tabla de datos con bandera */}
+        {/* sobre mí: texto biográfico y tabla de datos con bandera */}
         <Section id="sobre-mi" style={{
           padding: 'clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem)',
           borderTop: '1px solid var(--border)',
         }}>
           <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-            <Label text="1. Sobre mi" />
+            <Label text="1. Sobre mí" />
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '3rem', marginTop: '2.5rem' }}>
               <div>
                 <h2 style={{
@@ -381,19 +380,19 @@ export default function App() {
                   <span style={{ color: 'var(--accent)' }}>que escalan.</span>
                 </h2>
                 <p style={{ color: 'var(--text-2)', lineHeight: 1.8, marginBottom: '1rem' }}>
-                  Actualmente soy un estudiante de Ciencias de la Computacion y que le interesa en algun punto ser un desarrollador web con enfoque en backend y arquitectura de servidores. A lo largo del curso Sistemas y Tecnologia Web tuve la oportunidad de profundizar en Go, despliegue en Railway y construccion de APIs.
+                  Actualmente soy un estudiante de Ciencias de la Computación al que le interesa en algún punto ser un desarrollador web con enfoque en backend y arquitectura de servidores. A lo largo del curso Sistemas y Tecnología Web tuve la oportunidad de profundizar en Go, despliegue en Railway y construcción de APIs.
                 </p>
                 <p style={{ color: 'var(--text-2)', lineHeight: 1.8 }}>
-                  Mi meta es trabajar en una startup tecnica que ayude a negocios pequenos y medianos a automatizar procesos mediante software bien construido.
+                  Mi meta es trabajar en una startup técnica que ayude a negocios pequeños y medianos a automatizar procesos mediante software bien construido.
                 </p>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 {[
                   { label: 'enfoque', value: 'Backend & Servers' },
-                  { label: 'audiencia', value: 'Startups tecnicas B2B' },
+                  { label: 'audiencia', value: 'Startups técnicas B2B' },
                   { label: 'disponibilidad', value: 'Abierto a oportunidades' },
                   {
-                    label: 'ubicacion',
+                    label: 'ubicación',
                     value: (
                       <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <img src="/Guatemala.png" alt="Guatemala" style={{ width: '22px', height: '15px', objectFit: 'cover', borderRadius: '2px' }} />
@@ -415,7 +414,7 @@ export default function App() {
           </div>
         </Section>
 
-        {/* stack: cuadricula de categorias y herramientas */}
+        {/* stack: cuadrícula de categorías y herramientas */}
         <Section id="stack" style={{
           padding: 'clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem)',
           borderTop: '1px solid var(--border)',
@@ -424,7 +423,7 @@ export default function App() {
           <div style={{ maxWidth: '900px', margin: '0 auto' }}>
             <Label text="2. Stack" />
             <p style={{ color: 'var(--text-2)', marginTop: '0.75rem', marginBottom: '2.5rem' }}>
-              Las herramientas que uso y por que las elegi.
+              Las herramientas que uso y por qué las elegí.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1px', border: '1px solid var(--border)' }}>
               {STACK.map(({ cat, items }) => (
@@ -439,7 +438,7 @@ export default function App() {
               ))}
             </div>
             <p style={{ color: 'var(--text-3)', fontSize: '12px', marginTop: '1.5rem', lineHeight: 1.7 }}>
-              <span style={{ color: 'var(--accent)' }}>nota:</span> Importante mencionar que Vercel y Railway ofrecen el 80% del valor con mucho menos friccion operacional que AWS/Azure/GCP para startups pequenas.
+              <span style={{ color: 'var(--accent)' }}>nota:</span> Vercel y Railway ofrecen el 80% del valor con mucho menos fricción operacional que AWS/Azure/GCP para startups pequeñas.
             </p>
           </div>
         </Section>
@@ -462,7 +461,7 @@ export default function App() {
           </div>
         </Section>
 
-        {/* notas tecnicas breves sobre lo aprendido */}
+        {/* notas técnicas breves sobre lo aprendido */}
         <Section id="notas" style={{
           padding: 'clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem)',
           borderTop: '1px solid var(--border)',
@@ -471,7 +470,7 @@ export default function App() {
           <div style={{ maxWidth: '900px', margin: '0 auto' }}>
             <Label text="4. Notas" />
             <p style={{ color: 'var(--text-2)', marginTop: '0.75rem', marginBottom: '2.5rem' }}>
-              Cosas que aprendi construyendo. Sin filtro.
+              Cosas que aprendí construyendo. Sin filtro.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', border: '1px solid var(--border)' }}>
               {NOTAS.map((nota) => (
@@ -507,7 +506,7 @@ export default function App() {
           </div>
         </Section>
 
-        {/* footer con stack usado y nombre */}
+        {/* footer */}
         <footer style={{
           borderTop: '1px solid var(--border)',
           padding: '1.5rem clamp(1.5rem, 5vw, 4rem)',
@@ -527,11 +526,28 @@ export default function App() {
         @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(255,68,68,0.6)} 70%{box-shadow:0 0 0 6px rgba(255,68,68,0)} 100%{box-shadow:0 0 0 0 rgba(255,68,68,0)} }
         .desktop-nav { display:flex!important }
         .hamburger { display:none!important }
+
+        /* mobile: foto arriba centrada y pequeña, texto abajo */
         @media(max-width:640px){
           .desktop-nav{display:none!important}
           .hamburger{display:block!important}
-          #inicio { grid-template-columns: 1fr !important; }
-          #inicio > div:nth-child(3) { display: none !important; }
+          #inicio {
+            grid-template-columns: 1fr !important;
+            grid-template-rows: auto auto;
+            padding-top: 3rem !important;
+            padding-bottom: 4rem !important;
+            align-items: start !important;
+          }
+          .hero-photo {
+            order: -1;
+          }
+          .hero-photo img {
+            width: 130px !important;
+            height: 130px !important;
+          }
+          .hero-text h1 {
+            font-size: 2.2rem !important;
+          }
         }
       `}</style>
     </div>
