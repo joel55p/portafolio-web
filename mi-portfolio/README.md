@@ -52,11 +52,10 @@ Por lo que esta fue una decision intencional.
 
 ### Si tuviera otra semana, que mejoraria
 
-1. **Mejorar el responsive en mobile**: el hero con foto circular se oculta en pantallas pequenas para simplificar.
 
-2. **Auditoria de performance y accesibilidad**: Usando herramientas gratis  como Lighthouse me aseguraria de llegar a un score mayor a 95 en performance y accesibilidad. Funciona bien pero no lo he medido.
+1. **Auditoria de performance y accesibilidad**: Usando herramientas gratis  como Lighthouse me aseguraria de llegar a un score mayor a 95 en performance y accesibilidad. Funciona bien pero no lo he medido.
 
-3. **Completar el proyecto de reservas**: durante el pitch del curso mencione la idea de construir un sistema de reservas para negocios pequeños. Ese proyecto sigue siendo una ambicion real. Tenerlo aunque sea como MVP funcionando habria sido el proyecto más representativo de lo que quiero hacer profesionalmente. No lo agregue porque siento que requiere mas tiempo y si lo hubiera hecho realmente solo seria por salir de paso y asi mejor no.
+2. **Completar el proyecto de reservas**: durante el pitch del curso mencione la idea de construir un sistema de reservas para negocios pequeños. Ese proyecto sigue siendo una ambicion real. Tenerlo aunque sea como MVP funcionando habria sido el proyecto más representativo de lo que quiero hacer profesionalmente. No lo agregue porque siento que requiere mas tiempo y si lo hubiera hecho realmente solo seria por salir de paso y asi mejor no.
 
 ---
 

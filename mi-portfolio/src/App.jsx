@@ -2,11 +2,11 @@ import { useState, useEffect, useRef } from 'react'
 
 // -------
 
-const NAV_ITEMS = ['inicio', 'sobre mi', 'stack', 'proyectos', 'notas', 'contacto']
+const NAV_ITEMS = ['inicio', 'sobre mi', 'stack', 'proyectos', 'notas', 'contacto'] // los ids del DOM no pueden tener espacios, se mapean a guiones en NAV_ID_MAP
 
 // -------
 
-function useInView(threshold = 0.15) {
+function useInView(threshold = 0.15) { //funcion que lo que hace es detectar si un elemento esta en pantalla o no, recibe un threshold que es el porcentaje del elemento que debe estar visible para considerarlo "in view"
   const ref = useRef(null)
   const [inView, setInView] = useState(false)
   useEffect(() => {
@@ -22,7 +22,7 @@ function useInView(threshold = 0.15) {
 
 // -------
 
-function Section({ id, children, style }) {
+function Section({ id, children, style }) { //funcion que representa una seccion de la pagina, recibe un id para el DOM, los children que es el contenido de la seccion y un style adicional para personalizar cada seccion, ademas utiliza el hook useInView para detectar si la seccion esta en pantalla y aplicar animaciones de opacidad y transformacion
   const [ref, inView] = useInView()
   return (
     <section id={id} ref={ref} style={{
@@ -36,7 +36,7 @@ function Section({ id, children, style }) {
   )
 }
 
-function ProjectCard({ project }) {
+function ProjectCard({ project }) { // funcion que representa una tarjeta de proyecto, recibe un objeto project con la informacion del proyecto y muestra su nombre, descripcion, tags, estado (live o no) y links a repo y demo, ademas tiene un efecto hover que cambia el fondo de la tarjeta
   const [hovered, setHovered] = useState(false)
   return (
     <div
@@ -95,14 +95,14 @@ function ProjectCard({ project }) {
 
 // -------
 
-const STACK = [
+const STACK = [ // arreglo de categorias y herramientas para mostrar en la seccion de stack, cada categoria tiene un nombre y un arreglo de items, se muestra en una cuadricula con borde entre categorias
   { cat: 'Backend', items: ['Go', 'Node.js', 'Express', 'REST APIs', 'JWT Auth'] },
   { cat: 'Frontend', items: ['React', 'Vite', 'HTML/CSS', 'JavaScript'] },
   { cat: 'Deploy & Cloud', items: ['Vercel', 'Railway', 'GitHub Pages'] },
   { cat: 'Testing & Tools', items: ['Vitest', 'React Testing Library', 'Git', 'GitHub', 'Postman'] },
 ]
 
-const PROJECTS = [
+const PROJECTS = [ // arreglo de proyectos para mostrar en la seccion de proyectos, cada proyecto tiene un slug, nombre, descripcion, tags, estado (live o no), link a repo y demo opcional, se muestra en tarjetas con efecto hover
   {
     slug: '01',
     name: 'Chat en Tiempo Real — JS Vanilla + Go',
@@ -132,7 +132,7 @@ const PROJECTS = [
   },
 ]
 
-// notas técnicas breves
+// notas técnicas breves que las inclui ya que me parecio importante como mencionar algo que me gusto reamente haber aprendido durante el proceso de la realización de algunas actividades del curso
 const NOTAS = [
   {
     slug: '01',
@@ -162,11 +162,11 @@ const NAV_ID_MAP = {
 
 // -------
 
-export default function App() {
-  const [active, setActive] = useState('inicio')
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [typed, setTyped] = useState('')
-  const fullText = 'En proceso de ser desarrollador web full stack con enfoque en backend.'
+export default function App() { // componente principal de la aplicación, maneja el estado de la sección activa para el nav, el estado del menú móvil, y el texto tipeado para la animación de introducción
+  const [active, setActive] = useState('inicio') //estado que representa la sección activa para el nav
+  const [menuOpen, setMenuOpen] = useState(false) //estado que representa si el menú móvil está abierto o no
+  const [typed, setTyped] = useState('') 
+  const fullText = 'En proceso de ser desarrollador web full stack con enfoque en backend.' // texto completo para la animación de tipeo en la sección de introducción
 
   /* typing animation al montar el componente */
   useEffect(() => {
@@ -179,8 +179,7 @@ export default function App() {
     return () => clearInterval(id)
   }, [])
 
-  /* detecta la sección activa según el scroll
-     caso especial: si el usuario llega al fondo, activa contacto directamente */
+  /* detecta la sección activa según el scroll y es caso especial si el usuario llega al fondo, activa contacto directamente */
   useEffect(() => {
     const handler = () => {
       const scrollY = window.scrollY + 120
@@ -203,13 +202,13 @@ export default function App() {
     return () => window.removeEventListener('scroll', handler)
   }, [])
 
-  const scrollTo = (navLabel) => {
-    const domId = NAV_ID_MAP[navLabel]
+  const scrollTo = (navLabel) => { // función para hacer scroll suave a la sección correspondiente al hacer click en el nav, también cierra el menú móvil si está abierto
+    const domId = NAV_ID_MAP[navLabel] // mapea la etiqueta del nav al id del DOM correspondiente
     document.getElementById(domId)?.scrollIntoView({ behavior: 'smooth' })
-    setMenuOpen(false)
+    setMenuOpen(false) // cierra el menú móvil al hacer click en una sección, mejora la experiencia en mobile para que no quede el menú abierto después de navegar a una sección
   }
 
-  return (
+  return ( // el componente retorna un div que contiene toda la aplicación, con un nav fijo en la parte superior, y un main con varias secciones (hero, sobre mi, stack, proyectos, notas, contacto) cada una con su propio estilo y contenido, además de un footer al final
     <div style={{ minHeight: '100vh' }}>
 
       {/* nav */}
@@ -239,17 +238,17 @@ export default function App() {
         <button onClick={() => setMenuOpen(v => !v)}
           style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text)', fontSize: '20px', display: 'none' }}
           className="hamburger" aria-label="menu">
-          {menuOpen ? '✕' : '☰'}
+          {menuOpen ? '✕' : '☰' /* cambia el icono del botón dependiendo de si el menú está abierto o no*/} 
         </button>
       </nav>
 
-      {menuOpen && (
+      {menuOpen && ( 
         <div style={{
           position: 'fixed', top: '56px', left: 0, right: 0, zIndex: 99,
           background: 'var(--bg-2)', borderBottom: '1px solid var(--border)',
           padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem',
         }}>
-          {NAV_ITEMS.map(label => (
+          {NAV_ITEMS.map(label =>( 
             <button key={label} onClick={() => scrollTo(label)} style={{
               background: 'none', border: 'none', cursor: 'pointer',
               fontFamily: 'var(--font-mono)', fontSize: '13px',
@@ -264,7 +263,7 @@ export default function App() {
 
       <main style={{ paddingTop: '56px' }}>
 
-        {/* hero: desktop = dos columnas, mobile = foto arriba pequeña + texto abajo */}
+        {/* hero: en compu son dos columnas, en movil es  foto arriba pequeña con texto abajo */}
         <section id="inicio" style={{
           minHeight: 'calc(100vh - 56px)',
           display: 'grid',
@@ -324,7 +323,7 @@ export default function App() {
             </div>
           </div>
 
-          {/* columna derecha: foto circular con borde degradado */}
+          {/* columna derecha: con foto circular y borde degradado */}
           <div style={{ position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }} className="hero-photo">
             <div style={{ position: 'relative' }}>
               <div style={{
@@ -351,7 +350,7 @@ export default function App() {
             </div>
           </div>
 
-          {/* indicador de scroll animado */}
+          {/* indicador de scroll animado que muestra la dirección del scroll */}
           <div style={{
             position: 'absolute', bottom: '2rem', left: '50%', transform: 'translateX(-50%)',
             color: 'var(--text-3)', fontSize: '11px', letterSpacing: '0.1em',
@@ -362,7 +361,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* sobre mí: texto biográfico y tabla de datos con bandera */}
+        {/* section sobre mí: texto biográfico y tabla de datos con bandera */}
         <Section id="sobre-mi" style={{
           padding: 'clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem)',
           borderTop: '1px solid var(--border)',
@@ -386,7 +385,7 @@ export default function App() {
                   Mi meta es trabajar en una startup técnica que ayude a negocios pequeños y medianos a automatizar procesos mediante software bien construido.
                 </p>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' } /* tabla de datos personales con dos columnas, a la izquierda el label y a la derecha el valor, con borde entre filas, y en la fila de ubicación se muestra una bandera de Guatemala junto al texto */}> 
                 {[
                   { label: 'enfoque', value: 'Backend & Servers' },
                   { label: 'audiencia', value: 'Startups técnicas B2B' },
@@ -400,7 +399,7 @@ export default function App() {
                       </span>
                     )
                   },
-                ].map(({ label, value }) => (
+                ].map(({ label, value }) => ( 
                   <div key={label} style={{
                     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                     borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem',
@@ -414,7 +413,7 @@ export default function App() {
           </div>
         </Section>
 
-        {/* stack: cuadrícula de categorías y herramientas */}
+        {/* sección stack con  cuadrícula de categorías y herramientas */}
         <Section id="stack" style={{
           padding: 'clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem)',
           borderTop: '1px solid var(--border)',
@@ -426,7 +425,7 @@ export default function App() {
               Las herramientas que uso y por qué las elegí.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1px', border: '1px solid var(--border)' }}>
-              {STACK.map(({ cat, items }) => (
+              {STACK.map(({ cat, items }) => ( /* mapea el arreglo de categorías y herramientas para mostrar cada categoría con su lista de herramientas, cada categoría es un bloque con fondo y borde, y dentro se muestra el nombre de la categoría y debajo una lista de las herramientas correspondientes */) => (
                 <div key={cat} style={{ padding: '1.5rem', background: 'var(--bg)', borderRight: '1px solid var(--border)' }}>
                   <p style={{ color: 'var(--accent)', fontSize: '11px', letterSpacing: '0.1em', marginBottom: '1rem' }}>{cat}</p>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -443,7 +442,7 @@ export default function App() {
           </div>
         </Section>
 
-        {/* proyectos: cards con badge live opcional */}
+        {/* sección proyectos que son cards con badge live opcional, ya que por ejemplo el lab6 simplemente fue un repo y no esta publicado en ninguna plataforma */}
         <Section id="proyectos" style={{
           padding: 'clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem)',
           borderTop: '1px solid var(--border)',
@@ -461,7 +460,7 @@ export default function App() {
           </div>
         </Section>
 
-        {/* notas técnicas breves sobre lo aprendido */}
+        {/* Sección para notas técnicas breves sobre lo aprendido */}
         <Section id="notas" style={{
           padding: 'clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem)',
           borderTop: '1px solid var(--border)',
@@ -480,7 +479,7 @@ export default function App() {
           </div>
         </Section>
 
-        {/* contacto: links a email, github y linkedin */}
+        {/*  ultima sección que es la de contacto con  links a mi email, github y linkedin */}
         <Section id="contacto" style={{
           padding: 'clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem)',
           borderTop: '1px solid var(--border)',
@@ -520,6 +519,7 @@ export default function App() {
 
       </main>
 
+        {/* estilos globales */}
       <style>{`
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
         @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-6px)} }
@@ -554,8 +554,8 @@ export default function App() {
   )
 }
 
-function Label({ text, style }) {
-  return (
+function Label({ text, style }) { // componente para mostrar un label con un estilo específico, se usa en cada sección para mostrar el número y título de la sección, recibe el texto a mostrar y un estilo adicional opcional
+  return ( // osea en pocas palabras renderiza las etiquetas de sección 
     <p style={{
       color: 'var(--accent)', fontSize: '11px', letterSpacing: '0.15em',
       display: 'flex', alignItems: 'center', gap: '0.5rem', ...style,
@@ -566,10 +566,10 @@ function Label({ text, style }) {
   )
 }
 
-function NotaCard({ nota }) {
+function NotaCard({ nota }) { // componente para mostrar una nota técnica breve, recibe un objeto nota con slug, título, fecha, cuerpo y tags, muestra el título con un estilo destacado, la fecha a la derecha, el cuerpo del texto y los tags al final, además tiene un efecto hover que cambia el fondo de la tarjeta para mejorar la experiencia de lectura
   const [hovered, setHovered] = useState(false)
   return (
-    <div
+    <div 
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -602,7 +602,7 @@ function NotaCard({ nota }) {
   )
 }
 
-function ContactLink({ href, label }) {
+function ContactLink({ href, label }) { // componente para mostrar un link de contacto con un estilo específico, recibe el href del enlace y el label a mostrar, tiene un efecto hover que cambia el color del texto y el borde para indicar que es interactivo
   const [hovered, setHovered] = useState(false)
   return (
     <a href={href} target="_blank" rel="noreferrer"
