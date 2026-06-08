@@ -73,7 +73,7 @@ Deploy:    Vercel
 ```bash
 git clone https://github.com/joel55p/portafolio-web.git 
 cd portafolio-web
-cd mi-portafolio
+cd mi-portfolio/
 npm install
 npm run dev
 ```

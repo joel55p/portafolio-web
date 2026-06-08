@@ -137,14 +137,14 @@ const NOTAS = [
   {
     slug: '01',
     titulo: 'Por qué HTTP sobre TCP sin net/http es más difícil de lo que parece',
-    fecha: 'Jun 2025',
+    fecha: 'Jun 2026',
     body: 'Cuando construí el Series Tracker usando el paquete net directamente, el primer error que me costó horas fue ERR_INVALID_HTTP_RESPONSE. El problema: estaba escribiendo los headers CORS antes de la línea de status HTTP. El protocolo HTTP exige que la primera línea sea siempre el status (HTTP/1.1 200 OK), y cualquier cosa antes de eso rompe la respuesta en el navegador. Usar net/http de la librería estándar abstrae todo esto. Hacerlo a mano obligó a entenderlo.',
     tags: ['Go', 'HTTP', 'TCP', 'CORS'],
   },
   {
     slug: '02',
     titulo: 'Cómo estructurar middleware en Go sin frameworks',
-    fecha: 'Jun 2025',
+    fecha: 'Jun 2026',
     body: 'En Go, un middleware es simplemente una función que recibe un http.Handler y devuelve otro http.Handler. El patrón es siempre el mismo: hacer algo antes, llamar al siguiente handler, hacer algo después. Lo interesante es que este patrón es idéntico al de Express en Node, pero Go lo hace explícito en el sistema de tipos. Cuando agregué CORS al Series Tracker, lo implementé como un wrapper que añade los headers necesarios a cualquier handler que se le pase, sin tocar la lógica de negocio.',
     tags: ['Go', 'Middleware', 'net/http'],
   },
