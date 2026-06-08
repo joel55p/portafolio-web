@@ -78,6 +78,12 @@ npm install
 npm run dev
 ```
 
+## pagina que use para iconos
+https://emojidb.org/simbolos-aesthetic-emojis 
+
+## comentario personal
+Se realizo asi el portafolio ya que segun lo hablado con Dennis me comento "El portafolio es más como tu página personal, enfocate en esa primero, y después podes agregar proyectos para showcase"  por lo que eso trate de representar lo visto en el curso combinado con mi persona, ademas de esto le agregue los proyectos del curso porque eso que queria hacer sobre funcionalidad de reservas la verdad que no creeria que me saldria en tan poco tiempo ya que es una idea que si la quiero implementar a futuro
+
 ## Repositorios de proyectos mostrados
 
 - Chat en tiempo real: https://github.com/joel55p/Lab6-web
