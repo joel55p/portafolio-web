@@ -413,7 +413,7 @@ export default function App() { // componente principal de la aplicación, manej
           </div>
         </Section>
 
-        {/* sección stack con  cuadrícula de categorías y herramientas */}
+      {/* stack: cuadrícula de categorías y herramientas */}
         <Section id="stack" style={{
           padding: 'clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem)',
           borderTop: '1px solid var(--border)',
@@ -425,7 +425,7 @@ export default function App() { // componente principal de la aplicación, manej
               Las herramientas que uso y por qué las elegí.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1px', border: '1px solid var(--border)' }}>
-              {STACK.map(({ cat, items }) => ( /* mapea el arreglo de categorías y herramientas para mostrar cada categoría con su lista de herramientas, cada categoría es un bloque con fondo y borde, y dentro se muestra el nombre de la categoría y debajo una lista de las herramientas correspondientes */) => (
+              {STACK.map(({ cat, items }) => (
                 <div key={cat} style={{ padding: '1.5rem', background: 'var(--bg)', borderRight: '1px solid var(--border)' }}>
                   <p style={{ color: 'var(--accent)', fontSize: '11px', letterSpacing: '0.1em', marginBottom: '1rem' }}>{cat}</p>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
