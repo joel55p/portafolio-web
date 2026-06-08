@@ -220,8 +220,10 @@ export default function App() { // componente principal de la aplicación, manej
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         height: '56px',
       }}>
-        <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '1rem', letterSpacing: '-0.02em' }}>
-          <span style={{ color: 'var(--accent)' }}>{'>'}</span> portfolio
+        <span 
+          onClick={() => scrollTo('inicio')}
+          style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '1rem', letterSpacing: '-0.02em' }}>
+          <span style={{ color: 'var(--accent)' }}>{'>'}</span> portafolio
         </span>
         <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }} className="desktop-nav">
           {NAV_ITEMS.map(label => (
